@@ -1,0 +1,36 @@
+version: '3'
+services:
+  hub:
+    image: selenium/hub
+    ports:
+      - 4444:4444
+  node-firefox:
+    image: selenium/node-firefox
+    environment:
+      HUB_PORT_4444_TCP_ADDR: hub
+      HUB_PORT_4444_TCP_PORT: 4444
+      NODE_PORT: 5555
+    ports:
+      - 5555:5555
+    depends_on:
+      - hub
+  node-chrome:
+    image: selenium/node-chrome
+    environment:
+      HUB_PORT_4444_TCP_ADDR: hub
+      HUB_PORT_4444_TCP_PORT: 4444
+      NODE_PORT: 6666
+    ports:
+      - 6666:6666
+    depends_on:
+      - hub
+  node-phantomjs:
+    image: selenium/node-phantomjs
+    environment:
+      HUB_PORT_4444_TCP_ADDR: hub
+      HUB_PORT_4444_TCP_PORT: 4444
+      NODE_PORT: 7777
+    ports:
+      - 7777:7777
+    depends_on:
+      - hub
